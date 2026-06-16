@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.TableView.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.ludoelite.controller.GameManagementController"
+            prefWidth="1200" prefHeight="780"
+            styleClass="main-root">
+
+    <!-- ═══ SIDEBAR ═══════════════════════════════════════════════════════ -->
+    <left>
+        <VBox styleClass="sidebar" prefWidth="240" spacing="0">
+            <VBox styleClass="sidebar-brand" alignment="CENTER" spacing="4">
+                <padding><Insets top="28" bottom="28"/></padding>
+                <Text text="🎲" style="-fx-font-size: 36;"/>
+                <Text text="Ludo Elite" styleClass="sidebar-brand-text"/>
+            </VBox>
+            <Separator/>
+            <VBox spacing="4" VBox.vgrow="ALWAYS">
+                <padding><Insets top="16" left="12" right="12"/></padding>
+                <Button text="📊  Dashboard" styleClass="nav-btn"
+                        maxWidth="Infinity" onAction="#handleBackToDashboard"/>
+                <Button text="🎮  Manage Games" styleClass="nav-btn, nav-btn-active"
+                        maxWidth="Infinity"/>
+                <Button text="🔄  Refresh" styleClass="nav-btn"
+                        maxWidth="Infinity" onAction="#handleRefresh"/>
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- ═══ MAIN CONTENT ══════════════════════════════════════════════════ -->
+    <center>
+        <HBox spacing="20" styleClass="content-area">
+            <padding><Insets top="32" right="24" bottom="32" left="24"/></padding>
+
+            <!-- Left: Table with search -->
+            <VBox spacing="12" HBox.hgrow="ALWAYS">
+                <Text text="Game Management" styleClass="page-title"/>
+                <Text text="Create, edit and delete game sessions" styleClass="page-subtitle"/>
+
+                <!-- Search bar -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <TextField fx:id="searchField"
+                               promptText="🔍 Search by name, status, host…"
+                               styleClass="text-field-styled"
+                               HBox.hgrow="ALWAYS"/>
+                    <ProgressIndicator fx:id="spinner"
+                                       prefWidth="22" prefHeight="22"
+                                       visible="false"/>
+                </HBox>
+
+                <!-- Data table -->
+                <TableView fx:id="gameTable" VBox.vgrow="ALWAYS"
+                           styleClass="data-table">
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                    <columns>
+                        <TableColumn fx:id="colId"      text="ID"       prefWidth="50"/>
+                        <TableColumn fx:id="colName"    text="Name"     prefWidth="160"/>
+                        <TableColumn fx:id="colStatus"  text="Status"   prefWidth="110"/>
+                        <TableColumn fx:id="colMax"     text="Max"      prefWidth="60"/>
+                        <TableColumn fx:id="colCurrent" text="Now"      prefWidth="60"/>
+                        <TableColumn fx:id="colHost"    text="Host"     prefWidth="130"/>
+                    </columns>
+                    <placeholder>
+                        <Label text="No games found." styleClass="table-placeholder"/>
+                    </placeholder>
+                </TableView>
+            </VBox>
+
+            <!-- Right: CRUD form panel -->
+            <VBox styleClass="form-panel" prefWidth="320" spacing="16">
+                <Label fx:id="formTitleLabel" text="New Game" styleClass="form-panel-title"/>
+                <Separator/>
+
+                <!-- Game Name -->
+                <VBox spacing="4">
+                    <Label text="Game Name *" styleClass="field-label"/>
+                    <TextField fx:id="fieldGameName"
+                               promptText="e.g. Sunday Ludo"
+                               styleClass="text-field-styled"/>
+                </VBox>
+
+                <!-- Status -->
+                <VBox spacing="4">
+                    <Label text="Status *" styleClass="field-label"/>
+                    <ComboBox fx:id="comboStatus" maxWidth="Infinity"
+                              promptText="Select status"
+                              styleClass="combo-styled"/>
+                </VBox>
+
+                <!-- Max Players -->
+                <VBox spacing="4">
+                    <Label text="Max Players * (2–4)" styleClass="field-label"/>
+                    <TextField fx:id="fieldMaxPlayers"
+                               promptText="2, 3, or 4"
+                               styleClass="text-field-styled"/>
+                </VBox>
+
+                <!-- Host Username -->
+                <VBox spacing="4">
+                    <Label text="Host Username *" styleClass="field-label"/>
+                    <TextField fx:id="fieldHostUsername"
+                               promptText="e.g. player_one"
+                               styleClass="text-field-styled"/>
+                </VBox>
+
+                <Region VBox.vgrow="ALWAYS"/>
+
+                <!-- Action buttons -->
+                <VBox spacing="10">
+                    <Button fx:id="btnSave" text="Create"
+                            styleClass="btn-primary"
+                            maxWidth="Infinity"
+                            onAction="#handleSave"/>
+                    <Button fx:id="btnDelete" text="Delete"
+                            styleClass="btn-danger"
+                            maxWidth="Infinity"
+                            onAction="#handleDelete"
+                            disable="true"/>
+                    <Button fx:id="btnClear" text="Clear Form"
+                            styleClass="btn-secondary"
+                            maxWidth="Infinity"
+                            onAction="#handleClear"/>
+                    <Separator/>
+                    <Label text="Quick Actions" styleClass="field-label"/>
+                    <Button text="🎮 Join Selected Game"
+                            styleClass="btn-success"
+                            maxWidth="Infinity"
+                            onAction="#handleJoinGame"/>
+                    <Button text="▶️ Play Selected Game"
+                            styleClass="btn-success"
+                            maxWidth="Infinity"
+                            onAction="#handlePlayGame"/>
+                </VBox>
+            </VBox>
+        </HBox>
+    </center>
+</BorderPane>

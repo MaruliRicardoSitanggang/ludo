@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.TableView.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.ludoelite.controller.DashboardController"
+            prefWidth="1200" prefHeight="780"
+            styleClass="main-root">
+
+    <!-- ═══ SIDEBAR ═══════════════════════════════════════════════════════ -->
+    <left>
+        <VBox styleClass="sidebar" prefWidth="240" spacing="0">
+            <padding><Insets top="0" right="0" bottom="0" left="0"/></padding>
+
+            <!-- Brand -->
+            <VBox styleClass="sidebar-brand" alignment="CENTER" spacing="4">
+                <padding><Insets top="28" bottom="28"/></padding>
+                <Text text="🎲" style="-fx-font-size: 36;"/>
+                <Text text="Ludo Elite" styleClass="sidebar-brand-text"/>
+            </VBox>
+
+            <Separator/>
+
+            <!-- Nav items -->
+            <VBox spacing="4" VBox.vgrow="ALWAYS">
+                <padding><Insets top="16" left="12" right="12"/></padding>
+
+                <Button text="📊  Dashboard" styleClass="nav-btn, nav-btn-active"
+                        maxWidth="Infinity"/>
+                <Button text="🎮  Manage Games" styleClass="nav-btn"
+                        maxWidth="Infinity" onAction="#handleManageGames"/>
+                <Button text="🎲  Play Game" styleClass="nav-btn"
+                        maxWidth="Infinity" onAction="#handlePlayGame"/>
+                <Button text="🔄  Refresh" styleClass="nav-btn"
+                        maxWidth="Infinity" onAction="#handleRefresh"/>
+            </VBox>
+
+            <!-- User + Logout at the bottom -->
+            <VBox styleClass="sidebar-footer" spacing="8">
+                <padding><Insets top="12" left="12" right="12" bottom="20"/></padding>
+                <Separator/>
+                <Label fx:id="welcomeLabel" styleClass="sidebar-welcome"
+                       wrapText="true"/>
+                <Button text="🚪  Logout" styleClass="btn-danger"
+                        maxWidth="Infinity" onAction="#handleLogout"/>
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- ═══ MAIN CONTENT ══════════════════════════════════════════════════ -->
+    <center>
+        <VBox spacing="24" styleClass="content-area">
+            <padding><Insets top="32" right="32" bottom="32" left="32"/></padding>
+
+            <!-- Page header -->
+            <VBox spacing="4">
+                <Text text="Dashboard" styleClass="page-title"/>
+                <Text text="Overview of all active game sessions" styleClass="page-subtitle"/>
+            </VBox>
+
+            <!-- Stat cards -->
+            <HBox spacing="20">
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label text="TOTAL GAMES" styleClass="stat-label"/>
+                    <Text fx:id="statsTotal" text="0" styleClass="stat-value"/>
+                </VBox>
+                <VBox styleClass="stat-card, stat-card-yellow" HBox.hgrow="ALWAYS">
+                    <Label text="WAITING" styleClass="stat-label"/>
+                    <Text fx:id="statsWaiting" text="0" styleClass="stat-value"/>
+                </VBox>
+                <VBox styleClass="stat-card, stat-card-green" HBox.hgrow="ALWAYS">
+                    <Label text="IN PROGRESS" styleClass="stat-label"/>
+                    <Text fx:id="statsPlaying" text="0" styleClass="stat-value"/>
+                </VBox>
+            </HBox>
+
+            <!-- Games table -->
+            <VBox VBox.vgrow="ALWAYS" spacing="10">
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <Text text="Active Games" styleClass="section-title"/>
+                    <ProgressIndicator fx:id="spinner"
+                                       prefWidth="20" prefHeight="20"
+                                       visible="false"/>
+                </HBox>
+
+                <TableView fx:id="gamesTable" VBox.vgrow="ALWAYS"
+                           styleClass="data-table">
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                    <columns>
+                        <TableColumn fx:id="colId"      text="ID"       prefWidth="60"/>
+                        <TableColumn fx:id="colName"    text="Game Name" prefWidth="200"/>
+                        <TableColumn fx:id="colStatus"  text="Status"    prefWidth="120"/>
+                        <TableColumn fx:id="colHost"    text="Host"      prefWidth="150"/>
+                        <TableColumn fx:id="colPlayers" text="Players"   prefWidth="80"/>
+                    </columns>
+                    <placeholder>
+                        <Label text="No games found. Click Refresh to load data."
+                               styleClass="table-placeholder"/>
+                    </placeholder>
+                </TableView>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

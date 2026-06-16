@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.*?>
+
+<!--
+    Ludo Board Game View
+    
+    Demonstrates MVC Pattern:
+    - This View (FXML) is controlled by LudoBoardController
+    - User interactions are handled by controller methods
+    - Game state is managed by GameEngine (Model)
+-->
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.ludoelite.controller.LudoBoardController"
+            styleClass="main-root"
+            prefWidth="1400" prefHeight="850">
+    
+    <!-- Top Bar -->
+    <top>
+        <HBox styleClass="sidebar-brand" alignment="CENTER_LEFT" spacing="20" 
+              style="-fx-padding: 20;">
+            <Button fx:id="backButton" text="← Back to Dashboard" 
+                    styleClass="btn-secondary" onAction="#handleBack"/>
+            
+            <Region HBox.hgrow="ALWAYS"/>
+            
+            <Label text="🎲 LUDO ELITE" styleClass="sidebar-brand-text" 
+                   style="-fx-font-size: 24px;"/>
+            
+            <Region HBox.hgrow="ALWAYS"/>
+            
+            <Label fx:id="currentPlayerLabel" text="Current Turn: Red Player" 
+                   styleClass="page-title" style="-fx-font-size: 18px;"/>
+        </HBox>
+    </top>
+    
+    <!-- Main Game Area -->
+    <center>
+        <HBox spacing="30" style="-fx-padding: 20;" alignment="CENTER">
+            
+            <!-- Left Sidebar: Player Info -->
+            <VBox spacing="15" style="-fx-min-width: 280;" alignment="TOP_CENTER">
+                <Label text="PLAYERS" styleClass="section-title" 
+                       style="-fx-font-size: 18px;"/>
+                
+                <Separator/>
+                
+                <!-- Player 1 (Red) -->
+                <HBox fx:id="player1Info" spacing="12" alignment="CENTER_LEFT" 
+                      styleClass="stat-card" style="-fx-padding: 15; -fx-min-height: 70;">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="🔴 RED" styleClass="stat-label" 
+                               style="-fx-text-fill: #ef4444; -fx-font-size: 11px;"/>
+                        <Label fx:id="player1Name" text="Player 1" 
+                               styleClass="section-title" style="-fx-font-size: 15px;"/>
+                    </VBox>
+                </HBox>
+                
+                <!-- Player 2 (Green) -->
+                <HBox fx:id="player2Info" spacing="12" alignment="CENTER_LEFT" 
+                      styleClass="stat-card" style="-fx-padding: 15; -fx-min-height: 70;">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="🟢 GREEN" styleClass="stat-label" 
+                               style="-fx-text-fill: #22c55e; -fx-font-size: 11px;"/>
+                        <Label fx:id="player2Name" text="Player 2" 
+                               styleClass="section-title" style="-fx-font-size: 15px;"/>
+                    </VBox>
+                </HBox>
+                
+                <!-- Player 3 (Yellow) -->
+                <HBox fx:id="player3Info" spacing="12" alignment="CENTER_LEFT" 
+                      styleClass="stat-card" style="-fx-padding: 15; -fx-min-height: 70;">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="🟡 YELLOW" styleClass="stat-label" 
+                               style="-fx-text-fill: #f59e0b; -fx-font-size: 11px;"/>
+                        <Label fx:id="player3Name" text="Player 3" 
+                               styleClass="section-title" style="-fx-font-size: 15px;"/>
+                    </VBox>
+                </HBox>
+                
+                <!-- Player 4 (Blue) -->
+                <HBox fx:id="player4Info" spacing="12" alignment="CENTER_LEFT" 
+                      styleClass="stat-card" style="-fx-padding: 15; -fx-min-height: 70;">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="🔵 BLUE" styleClass="stat-label" 
+                               style="-fx-text-fill: #3b82f6; -fx-font-size: 11px;"/>
+                        <Label fx:id="player4Name" text="Player 4" 
+                               styleClass="section-title" style="-fx-font-size: 15px;"/>
+                    </VBox>
+                </HBox>
+                
+                <Region VBox.vgrow="ALWAYS"/>
+                
+                <Separator/>
+                
+                <!-- Game Info -->
+                <VBox spacing="8" styleClass="stat-card" style="-fx-padding: 15;">
+                    <Label text="GAME INFO" styleClass="stat-label"/>
+                    <Label text="Game Mode: Local" style="-fx-text-fill: #cbd5e1; -fx-font-size: 12px;"/>
+                    <Label text="Players: 4" style="-fx-text-fill: #cbd5e1; -fx-font-size: 12px;"/>
+                </VBox>
+            </VBox>
+            
+            <!-- Center: Game Board Canvas -->
+            <VBox spacing="20" alignment="CENTER">
+                <Canvas fx:id="gameCanvas" width="600" height="600" 
+                        style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 20, 0, 0, 4);"/>
+                
+                <!-- Game Status -->
+                <Label fx:id="gameStatusLabel" text="Roll the dice to start!" 
+                       styleClass="page-subtitle" style="-fx-font-size: 16px;"/>
+            </VBox>
+            
+            <!-- Right Sidebar: Dice Controls -->
+            <VBox spacing="20" style="-fx-min-width: 280;" alignment="TOP_CENTER">
+                <Label text="DICE CONTROL" styleClass="section-title" 
+                       style="-fx-font-size: 18px;"/>
+                
+                <Separator/>
+                
+                <!-- Dice Display -->
+                <VBox spacing="15" alignment="CENTER" styleClass="stat-card" 
+                      style="-fx-padding: 30; -fx-min-height: 200;">
+                    <Label fx:id="diceResultLabel" text="🎲 ?" 
+                           style="-fx-font-size: 72px; -fx-text-fill: #f59e0b;"/>
+                    <Label text="Dice Result" styleClass="stat-label"/>
+                </VBox>
+                
+                <!-- Roll Button -->
+                <Button fx:id="rollDiceButton" text="🎲 ROLL DICE" 
+                        styleClass="btn-primary" 
+                        onAction="#handleRollDice"
+                        style="-fx-font-size: 16px; -fx-pref-width: 250; -fx-pref-height: 60;"/>
+                
+                <Region VBox.vgrow="ALWAYS"/>
+                
+                <Separator/>
+                
+                <!-- Game Rules Quick Reference -->
+                <VBox spacing="8" styleClass="form-panel" style="-fx-padding: 15;">
+                    <Label text="📜 QUICK RULES" styleClass="stat-label" 
+                           style="-fx-font-size: 12px;"/>
+                    <Label text="• Roll 6 to exit base" 
+                           style="-fx-text-fill: #94a3b8; -fx-font-size: 11px; -fx-wrap-text: true;"/>
+                    <Label text="• Roll 6 = extra turn" 
+                           style="-fx-text-fill: #94a3b8; -fx-font-size: 11px; -fx-wrap-text: true;"/>
+                    <Label text="• 3 sixes = skip turn" 
+                           style="-fx-text-fill: #94a3b8; -fx-font-size: 11px; -fx-wrap-text: true;"/>
+                    <Label text="• ★ = safe zones" 
+                           style="-fx-text-fill: #94a3b8; -fx-font-size: 11px; -fx-wrap-text: true;"/>
+                    <Label text="• First to finish wins!" 
+                           style="-fx-text-fill: #94a3b8; -fx-font-size: 11px; -fx-wrap-text: true;"/>
+                </VBox>
+            </VBox>
+            
+        </HBox>
+    </center>
+    
+    <!-- Bottom Bar: Additional Controls -->
+    <bottom>
+        <HBox spacing="15" alignment="CENTER" style="-fx-padding: 15; -fx-background-color: #1e293b;">
+            <Label text="💡 Tip: Click on your pieces to move them after rolling" 
+                   styleClass="muted-text" style="-fx-font-size: 13px;"/>
+            
+            <Region HBox.hgrow="ALWAYS"/>
+            
+            <Label text="Ludo Elite v1.0 | OOP Demo Project" 
+                   styleClass="muted-text" style="-fx-font-size: 11px;"/>
+        </HBox>
+    </bottom>
+    
+</BorderPane>

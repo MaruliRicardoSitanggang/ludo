@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.ludoelite.controller.RegisterController"
+            styleClass="auth-root"
+            prefWidth="520" prefHeight="700">
+
+    <center>
+        <VBox alignment="CENTER" spacing="0" styleClass="auth-card">
+            <padding><Insets top="40" right="48" bottom="40" left="48"/></padding>
+
+            <!-- Title -->
+            <VBox alignment="CENTER" spacing="6">
+                <Text styleClass="app-title" text="🎲 Ludo Elite"/>
+                <Text styleClass="app-subtitle" text="Game Management Platform"/>
+            </VBox>
+
+            <Region prefHeight="24"/>
+
+            <Label text="Create Account" styleClass="form-title"/>
+            <Label text="Fill in the details below to register" styleClass="form-subtitle"/>
+
+            <Region prefHeight="20"/>
+
+            <!-- Error label -->
+            <Label fx:id="errorLabel" styleClass="error-label"
+                   wrapText="true" maxWidth="380" visible="false"/>
+
+            <!-- Username -->
+            <VBox spacing="4">
+                <Label text="Username" styleClass="field-label"/>
+                <TextField fx:id="usernameField"
+                           promptText="3–20 alphanumeric characters"
+                           styleClass="text-field-styled"/>
+            </VBox>
+
+            <Region prefHeight="12"/>
+
+            <!-- Email -->
+            <VBox spacing="4">
+                <Label text="Email Address" styleClass="field-label"/>
+                <TextField fx:id="emailField"
+                           promptText="you@example.com"
+                           styleClass="text-field-styled"/>
+            </VBox>
+
+            <Region prefHeight="12"/>
+
+            <!-- Password -->
+            <VBox spacing="4">
+                <Label text="Password" styleClass="field-label"/>
+                <PasswordField fx:id="passwordField"
+                               promptText="Minimum 6 characters"
+                               styleClass="text-field-styled"/>
+            </VBox>
+
+            <Region prefHeight="12"/>
+
+            <!-- Confirm Password -->
+            <VBox spacing="4">
+                <Label text="Confirm Password" styleClass="field-label"/>
+                <PasswordField fx:id="confirmPasswordField"
+                               promptText="Re-enter your password"
+                               styleClass="text-field-styled"/>
+            </VBox>
+
+            <Region prefHeight="24"/>
+
+            <!-- Register button -->
+            <StackPane>
+                <Button fx:id="registerButton" text="Create Account"
+                        styleClass="btn-primary"
+                        maxWidth="Infinity"
+                        onAction="#handleRegister"/>
+                <ProgressIndicator fx:id="spinner"
+                                   prefWidth="24" prefHeight="24"
+                                   visible="false"
+                                   StackPane.alignment="CENTER_RIGHT">
+                    <StackPane.margin><Insets right="12"/></StackPane.margin>
+                </ProgressIndicator>
+            </StackPane>
+
+            <Region prefHeight="16"/>
+
+            <!-- Back to login -->
+            <HBox alignment="CENTER" spacing="6">
+                <Label text="Already have an account?" styleClass="muted-text"/>
+                <Button text="Sign in" styleClass="btn-link"
+                        onAction="#handleBackToLogin"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
